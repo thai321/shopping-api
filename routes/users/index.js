@@ -15,7 +15,6 @@ router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, (req, res, next) => {
   const { id } = req.user;
-  const result = [];
 
   req.user
     .getOrders({
@@ -27,7 +26,8 @@ router.get('/profile', isLoggedIn, (req, res, next) => {
         'status',
         'createdAt'
       ],
-      include: [{ model: models.Cart }]
+      include: [{ model: models.Cart }],
+      order: [['updatedAt', 'DESC']]
     })
     .then(orders => {
       if (orders.length <= 0) {
