@@ -5,14 +5,12 @@ module.exports = {
 };
 
 const {
-  stripePublishableKey,
-  stripeSecretKey,
-  twilioAccountSID,
-  twilioAuthToken,
+  TWILIO_ACCOUNT_SID,
+  TWILIO_AUTH_TOKEN,
   SENDGRID_API_KEY
-} = require('../../config/keys_dev');
+} = require('../../config/config');
 
-const client = require('twilio')(twilioAccountSID, twilioAuthToken);
+const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_KEY);
 

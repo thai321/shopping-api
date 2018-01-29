@@ -6,8 +6,8 @@ const moment = require('moment');
 
 const { sendTextMessage, sendMail, requireSignin } = require('./service');
 const {
-  stripePublishableKey,
-  stripeSecretKey
+  STRIPE_PUBLIC_KEY,
+  STRIPE_SECRET_KEY
 } = require('../../config/keys_dev');
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.get('/checkout', requireSignin, (req, res, next) => {
     totalPrice,
     errMsg,
     noError: !errMsg,
-    stripePublishableKey
+    STRIPE_PUBLIC_KEY
   }); // END res.render('shop/checkout'
 }); // END router.get('/checkout', (req, res, next)
 
@@ -31,7 +31,7 @@ router.post('/checkout', requireSignin, (req, res, next) => {
 
   const { id, name, phone, email } = req.user;
   const { totalPrice } = req.session.cart;
-  const stripe = require('stripe')(stripeSecretKey);
+  const stripe = require('stripe')(STRIPE_SECRET_KEY);
 
   stripe.charges.create(
     {
