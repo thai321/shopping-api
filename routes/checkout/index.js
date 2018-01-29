@@ -5,10 +5,7 @@ const accounting = require('accounting-js');
 const moment = require('moment');
 
 const { sendTextMessage, sendMail, requireSignin } = require('./service');
-const {
-  STRIPE_PUBLIC_KEY,
-  STRIPE_SECRET_KEY
-} = require('../../config/keys_dev');
+const { STRIPE_PUBLIC_KEY, STRIPE_SECRET_KEY } = require('../../config/config');
 
 const router = express.Router();
 
