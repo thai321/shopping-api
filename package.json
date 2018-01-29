@@ -5,6 +5,7 @@
   "scripts": {
     "s": "nodemon app.js",
     "dev": "cross-env NODE_ENV=development nodemon app.js",
+    "pro": "cross-env NODE_ENV=production nodemon app.js",
     "t": "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit"
   },
   "engines": {
