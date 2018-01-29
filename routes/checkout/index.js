@@ -13,9 +13,11 @@ router.get('/checkout', requireSignin, (req, res, next) => {
   if (!req.session.cart) return res.redirect('/shopping-cart');
 
   const errMsg = req.flash('error')[0];
-  const { totalPrice } = req.session.cart;
+  const { totalPrice, totalQuantity } = req.session.cart;
   res.render('shop/checkout', {
     totalPrice,
+    totalQuantity,
+    dataAmount: totalPrice * 100,
     errMsg,
     noError: !errMsg,
     stripePublishableKey: STRIPE_PUBLIC_KEY

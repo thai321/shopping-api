@@ -76,9 +76,9 @@
         class="stripe-button"
         data-key={{ stripePublishableKey }}
         data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-        data-name="Demo Site"
-        data-description="2 widgets ($20.00)"
-        data-amount="2000"
+        data-name="Demo Checkout site"
+        data-description="{{ totalQuantity }} items (${{ totalPrice }})"
+        data-amount="{{ dataAmount }}"
         data-zip-code="true"
         >
       </script>
