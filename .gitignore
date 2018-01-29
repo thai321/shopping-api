@@ -1,6 +1,5 @@
 node_modules/
 .DS_Store
 .byebug_history
-yarn.lock
 keys_dev.js
 keys_prod.js
