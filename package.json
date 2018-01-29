@@ -7,6 +7,9 @@
     "dev": "cross-env NODE_ENV=development nodemon app.js",
     "t": "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit"
   },
+  "engines": {
+    "node": "4.1.1"
+  },
   "dependencies": {
     "@sendgrid/mail": "6.2.1",
     "accounting-js": "1.1.1",
