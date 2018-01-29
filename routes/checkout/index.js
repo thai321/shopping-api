@@ -18,7 +18,7 @@ router.get('/checkout', requireSignin, (req, res, next) => {
     totalPrice,
     errMsg,
     noError: !errMsg,
-    STRIPE_PUBLIC_KEY
+    stripePublishableKey: STRIPE_PUBLIC_KEY
   }); // END res.render('shop/checkout'
 }); // END router.get('/checkout', (req, res, next)
 
