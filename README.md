@@ -103,7 +103,7 @@ moment.tz.names()
 | column name   |      data type      |  details |
 |----------|:-------------:|------:|
 | `id` |  integer | not null, primary key  |
-| `title` |  string |  indexed, not null, unique |
+| `name` |  string |  indexed, not null, unique |
 | `description` |  string |  not null |
 | `quantity` |  integer |  not null |
 | `price` |  float |  not null |

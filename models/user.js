@@ -6,60 +6,78 @@ const jwt = require('jsonwebtoken');
 const constants = require('../config/constants');
 
 module.exports = (sequelize, DataTypes) => {
-  var User = sequelize.define('User', {
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    phone: DataTypes.STRING,
-    salt: DataTypes.STRING,
-    password: DataTypes.STRING,
-    session_token: DataTypes.STRING,
-    timezone: DataTypes.STRING,
-    cardNumber: DataTypes.STRING,
-    mailingAdress: DataTypes.STRING,
-    shippingAdress: DataTypes.STRING
-  }, {
-    timestamp: true,
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
+  const User = sequelize.define(
+    'user',
+    {
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          min: 4,
+          max: 8
+        }
       },
+      email: {
+        type: DataTypes.STRING,
+        validate: {
+          isEmail: true
+        },
+        unique: true
+      },
+      password: DataTypes.STRING,
+      phone: DataTypes.STRING,
+      session_token: DataTypes.STRING,
+      cardNumber: DataTypes.STRING,
+      mailingAddress: DataTypes.STRING,
+      shippingAdress: DataTypes.STRING,
+      timezone: DataTypes.STRING
     },
-    hooks: {
-      beforeCreate: (user, options) => {
-        const salt = bCrypt.genSaltSync(8);
-        user.salt = salt;
-        user.password = bCrypt.hashSync(user.password, salt);
+    {
+      hooks: {
+        beforeCreate: (user, options) => {
+          const salt = bCrypt.genSaltSync(8);
+          user.salt = salt;
+          user.password = bCrypt.hashSync(user.password, salt);
+        }
       }
     }
-  });
+  );
 
-  User.prototype.authenticate = function (password){
-    if(bCrypt.compareSync(password, this.password)) {
+  User.associate = models => {
+    User.hasMany(models.Order, {
+      foreignKey: 'userId'
+    });
+
+    User.hasMany(models.Cart, {
+      foreignKey: 'userId'
+    });
+  };
+
+  User.prototype.authenticate = function(password) {
+    if (bCrypt.compareSync(password, this.password)) {
       return this;
     } else {
       return false;
     }
   };
 
-  User.prototype.createToken = function() {
-    return jwt.sign({ id: this.id }, constants.JWT_SECRET)
-  };
-
-  User.prototype.toJSON = function() {
-    return {
-      id: this.id,
-      username: this.username,
-      email: this.email
-    };
-  };
-
-  User.prototype.toAuthJSON = function() {
-    return {
-      token: this.createToken(),
-      ...this.toJSON()
-    };
-  };
-
+  // User.prototype.createToken = function() {
+  //   return jwt.sign({ id: this.id }, constants.JWT_SECRET)
+  // };
+  //
+  // User.prototype.toJSON = function() {
+  //   return {
+  //     id: this.id,
+  //     username: this.username,
+  //     email: this.email
+  //   };
+  // };
+  //
+  // User.prototype.toAuthJSON = function() {
+  //   return {
+  //     token: this.createToken(),
+  //     ...this.toJSON()
+  //   };
+  // };
 
   return User;
 };
