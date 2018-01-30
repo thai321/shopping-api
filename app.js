@@ -19,10 +19,13 @@ allRoutes(app);
 // localhost:3000/large.jpg will send back a puppy image
 app.use(express.static(path.join(__dirname, '/public')));
 
-if (process.env.NODE_ENV !== 'test') {
-  require('./helpers/listen_and_sync_db')(app);
-} else {
+const env = process.env.NODE_ENV;
+if (env === 'sync') {
+  require('./helpers/sync_db')();
+} else if (env === 'test') {
   require('./helpers/listen')(app);
+} else {
+  require('./helpers/listen_and_sync_db')(app);
 }
 
 module.exports = { app };

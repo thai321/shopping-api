@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon app.js",
     "prod": "cross-env NODE_ENV=production node app.js",
-    "t": "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit"
+    "t": "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit",
+    "test":
+      "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit",
+    "sync": "cross-env NODE_ENV=sync node app.js"
   },
   "engines": {
     "node": "8.9.4",

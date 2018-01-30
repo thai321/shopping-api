@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - "stable"
+env:
+  - DB=postgresql
+
+script:
+  - sequelize db:create
+  - yarn sync
+  - sequelize db:seed:all
+  - yarn t

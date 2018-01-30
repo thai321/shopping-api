@@ -12,5 +12,6 @@ module.exports = {
   // Database configuration environment
   development: DB_CONFIG['development'],
   test: DB_CONFIG['test'],
-  production: DB_CONFIG['production']
+  production: DB_CONFIG['production'],
+  sync: DB_CONFIG['development']
 };
