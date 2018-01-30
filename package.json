@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "s": "nodemon app.js",
     "dev": "cross-env NODE_ENV=development nodemon app.js",
     "prod": "cross-env NODE_ENV=production node app.js",
     "t": "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit"

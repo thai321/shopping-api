@@ -1,7 +1,6 @@
 const passport = require('passport');
 const models = require('../models');
 const LocalStrategy = require('passport-local').Strategy;
-const pry = require('pryjs');
 const Joi = require('joi');
 
 passport.serializeUser((user, done) => {

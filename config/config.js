@@ -9,7 +9,7 @@ module.exports = {
   TWILIO_AUTH_TOKEN: API_KEYS['TWILIO_AUTH_TOKEN'],
   SENDGRID_API_KEY: API_KEYS['SENDGRID_API_KEY'],
 
-  // Database environment configuration
+  // Database configuration environment
   development: DB_CONFIG['development'],
   test: DB_CONFIG['test'],
   production: DB_CONFIG['production']

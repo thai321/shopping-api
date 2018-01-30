@@ -2,4 +2,3 @@ node_modules/
 .DS_Store
 .byebug_history
 keys_dev.js
-keys_prod.js

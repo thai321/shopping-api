@@ -5,7 +5,8 @@ module.exports = {
     database: 'shoppingCart_development',
     host: '127.0.0.1',
     dialect: 'postgres',
-    logging: false
+    logging: false,
+    operatorsAliases: false
   },
   test: {
     username: 'ThaiNguyen',
@@ -13,7 +14,8 @@ module.exports = {
     database: 'shoppingCart_development',
     host: '127.0.0.1',
     dialect: 'postgres',
-    logging: false
+    logging: false,
+    operatorsAliases: false
   },
   production: {
     use_env_variable: 'DATABASE_URL',
@@ -22,6 +24,7 @@ module.exports = {
     database: 'shoppingCart_production',
     host: 'shoppingcartnode.herokuapp.com',
     dialect: 'postgres',
-    logging: false
+    logging: false,
+    operatorsAliases: false
   }
 };
