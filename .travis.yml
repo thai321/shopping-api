@@ -1,8 +1,9 @@
 language: node_js
 node_js:
   - "stable"
-env:
-  - DB=postgresql
+
+before_script:
+  - yarn install
 
 script:
   - sequelize db:create
