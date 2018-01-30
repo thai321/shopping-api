@@ -7,8 +7,6 @@ module.exports = app => {
     app.listen(constants.PORT, err => {
       if (err) throw err;
 
-      console.log('Listening on port:', constants.PORT);
-      console.log(`Enviroment: ${process.env.NODE_ENV}`);
       console.log(
         'Process ' + process.pid + ' is listening to all incoming requests'
       );
@@ -16,7 +14,7 @@ module.exports = app => {
       models.sequelize
         .sync()
         .then(() => {
-          console.log('Nice! Database looks fine');
+          console.log('Completed syncing to the database');
         })
         .catch(err => {
           console.log(err, 'Something went wrong with the Database Update!');

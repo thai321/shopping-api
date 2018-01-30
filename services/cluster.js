@@ -9,7 +9,7 @@ module.exports = () => {
     }
 
     cluster.on('online', worker => {
-      console.log('Worker ' + worker.process.pid + ' is online');
+      console.log('Worker ' + worker.process.pid + ' is online ......');
     });
 
     cluster.on('exit', (worker, code, signal) => {
