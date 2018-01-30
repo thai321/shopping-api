@@ -38,7 +38,7 @@ const signinUrl = '/admin/signin';
 const logoutUrl = '/admin/logout';
 const adminProfile = '/admin/profile';
 
-describe.only('Routes : admin authentication', () => {
+describe('Routes : admin authentication', () => {
   describe('GET /admin/signup', () => {
     // Should render '/user/signup' Sign Up with status code 200
     it('should render the signup page', done => {

@@ -18,11 +18,16 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 function requireSignin(req, res, next) {
   const isAdmin = req.user instanceof models.Admin ? true : false;
+  const loggedin = req.isAuthenticated();
 
-  if (req.isAuthenticated() && !isAdmin) return next();
-
-  req.session.oldUrl = req.url;
-  res.redirect('/user/signin');
+  if (loggedin && !isAdmin) {
+    return next();
+  } else if (loggedin && isAdmin) {
+    res.redirect('/admin/profile');
+  } else {
+    req.session.oldUrl = req.url;
+    res.redirect('/user/signin');
+  }
 }
 
 function sendTextMessage({ name, moneyFormat, date, phone }) {
