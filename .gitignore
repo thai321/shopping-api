@@ -2,3 +2,4 @@ node_modules/
 .DS_Store
 .byebug_history
 keys_dev.js
+yarn.lock
