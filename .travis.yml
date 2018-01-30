@@ -3,10 +3,10 @@ node_js:
   - "stable"
 
 before_script:
-  - yarn install
+  - npm install
 
 script:
   - sequelize db:create
-  - yarn sync
+  - npm sync
   - sequelize db:seed:all
-  - yarn t
+  - npm test
