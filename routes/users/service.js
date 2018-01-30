@@ -10,7 +10,9 @@ const { generateArray } = require('./helper');
 const moment = require('moment');
 
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
+  const isUser = req.user instanceof models.User ? true : false;
+
+  if (isUser && req.isAuthenticated()) {
     return next();
   } else {
     res.redirect('/');

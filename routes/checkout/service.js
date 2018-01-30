@@ -10,12 +10,16 @@ const {
   SENDGRID_API_KEY
 } = require('../../config/config');
 
+const models = require('../../models');
+
 const client = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(SENDGRID_API_KEY);
 
 function requireSignin(req, res, next) {
-  if (req.isAuthenticated()) return next();
+  const isAdmin = req.user instanceof models.Admin ? true : false;
+
+  if (req.isAuthenticated() && !isAdmin) return next();
 
   req.session.oldUrl = req.url;
   res.redirect('/user/signin');

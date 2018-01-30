@@ -5,11 +5,12 @@ const router = express.Router();
 
 const models = require('../../models');
 const { generateArray } = require('./helper');
+const { notAdmin } = require('./service');
 
 // Node turn req.session.cart from Cart model to dataValues of cart
 
 // And action to add item to the cart
-router.get('/add-to-cart/:id', (req, res, next) => {
+router.get('/add-to-cart/:id', notAdmin, (req, res, next) => {
   const productId = req.params.id;
   const cart = req.session.cart
     ? models.Cart.build(req.session.cart)
@@ -26,7 +27,7 @@ router.get('/add-to-cart/:id', (req, res, next) => {
     });
 }); // END router.get('/add-to-cart/:id', (req, res, next)
 
-router.get('/reduce/:id', (req, res, next) => {
+router.get('/reduce/:id', notAdmin, (req, res, next) => {
   const productId = req.params.id;
   const cart = models.Cart.build(req.session.cart);
   const { price } = cart.products[productId];
@@ -36,7 +37,7 @@ router.get('/reduce/:id', (req, res, next) => {
   res.redirect('/shopping-cart');
 }); // END router.get('/reduce/:id', (req, res, next) => {
 
-router.get('/remove/:id', (req, res, next) => {
+router.get('/remove/:id', notAdmin, (req, res, next) => {
   const productId = req.params.id;
   const cart = models.Cart.build(req.session.cart);
 
@@ -46,7 +47,7 @@ router.get('/remove/:id', (req, res, next) => {
 });
 
 // Render the overview of the shopping list (cart view)
-router.get('/shopping-cart', (req, res, next) => {
+router.get('/shopping-cart', notAdmin, (req, res, next) => {
   if (!req.session.cart) {
     return res.render('shop/shopping-cart', { products: null, hello: 'hello' });
   }

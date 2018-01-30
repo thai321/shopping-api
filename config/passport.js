@@ -1,15 +1,16 @@
 const passport = require('passport');
 const models = require('../models');
 const LocalStrategy = require('passport-local').Strategy;
-
+const pry = require('pryjs');
 const Joi = require('joi');
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, { id: user.id, admin: user instanceof models.Admin });
 });
 
-passport.deserializeUser((id, done) => {
-  models.User.findById(id).then(user => {
+passport.deserializeUser(({ id, admin }, done) => {
+  const model = admin ? models.Admin : models.User;
+  model.findById(id).then(user => {
     if (user) {
       done(null, user);
     } else {
@@ -28,6 +29,9 @@ passport.use(
       passReqToCallback: true
     },
     (req, email, password, done) => {
+      const isAdmin = req.originalUrl === '/admin/signup' ? true : false;
+      const model = isAdmin ? models.Admin : models.User;
+
       const { name, phone } = req.body;
 
       // Use joi check validation for name, email, and password
@@ -46,14 +50,20 @@ passport.use(
 
       // If user enter the same email => send back a message
       // otherwise, create a new account
-      models.User.findOne({ where: { email } }).then(user => {
+      model.findOne({ where: { email } }).then(user => {
         if (user) {
           return done(null, false, {
             message: 'Email is already in use'
           });
         } else {
           // Create user if not found
-          models.User.create({ name: req.body.name, email, password, phone })
+          model
+            .create({
+              name: req.body.name,
+              email,
+              password,
+              phone
+            })
             .then(newUser => {
               if (!newUser) {
                 return done(null, false);
@@ -97,6 +107,9 @@ passport.use(
       passReqToCallback: true
     },
     (req, email, password, done) => {
+      const isAdmin = req.originalUrl === '/admin/signin' ? true : false;
+      const model = isAdmin ? models.Admin : models.User;
+
       const checkValidate = Joi.validate({ email, password }, signInSchema, {
         abortEarly: false
       });
@@ -108,7 +121,8 @@ passport.use(
         return done(null, false, req.flash('error', messages));
       }
 
-      models.User.findOne({ where: { email } })
+      model
+        .findOne({ where: { email } })
         .then(user => {
           // Handle: Invalid email
           if (!user) {

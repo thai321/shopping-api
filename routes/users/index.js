@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const async = require('async');
+// const async = require('async');
 
 const models = require('../../models');
 
-const { isLoggedIn, notLoggedIn, getProducts } = require('./service');
-const { generateArray } = require('./helper');
+const { isLoggedIn, notLoggedIn } = require('./service');
+const { generateArray, getProducts } = require('./helper');
 
 // all the routes should be protected by csrf
 const csrf = require('csurf');
@@ -50,6 +50,8 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
   res.redirect('/');
 });
 
+// If not logged in, then can't access the routes below: /user/signup, /user/signup
+// because already logged in
 router.use('/', notLoggedIn, (req, res, next) => {
   next();
 });

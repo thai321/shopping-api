@@ -2,15 +2,20 @@
 const flash = require('connect-flash');
 const expressHbs = require('express-handlebars');
 
-module.exports = app => {
+const models = require('../models');
 
+module.exports = app => {
   // view engine setup
   app.engine('.hbs', expressHbs({ defaultLayout: 'layout', extname: '.hbs' }));
   app.set('view engine', 'hbs');
 
   app.use(flash());
   app.use((req, res, next) => {
-    res.locals.loggedIn = req.isAuthenticated();
+    const isAdmin = req.user instanceof models.Admin ? true : false;
+    const loggedIn = req.isAuthenticated();
+
+    res.locals.isAdminLoggedIn = isAdmin && loggedIn;
+    res.locals.userloggedIn = !isAdmin && loggedIn;
 
     // now we can access session in the view
     // Ex: session.cart

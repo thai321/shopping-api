@@ -19,6 +19,7 @@ if (config.use_env_variable) {
 
 const models = {
   User: sequelize['import'](path.join(__dirname, 'user')),
+  Admin: sequelize['import'](path.join(__dirname, 'admin')),
   Product: sequelize['import'](path.join(__dirname, 'product')),
   Cart: sequelize['import'](path.join(__dirname, 'cart')),
   Order: sequelize['import'](path.join(__dirname, 'order'))
