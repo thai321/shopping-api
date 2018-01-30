@@ -13,7 +13,6 @@ const jQuery = require('jquery')(window);
 // Models and App
 const { app } = require('../../app');
 const models = require('../../models');
-const { Session } = models.sequelize.models;
 
 // for authentication request
 const authenticatedUser = request.agent(app);
@@ -29,6 +28,7 @@ const shoppingCartUrl = '/shopping-cart';
 const checkoutUrl = '/checkout';
 const signinUrl = '/user/signin';
 const signupUrl = '/user/signup';
+const userProfile = '/user/profile';
 
 describe('Routes : Checkout', () => {
   describe('Anonymous or no login try to ', function() {
@@ -46,21 +46,25 @@ describe('Routes : Checkout', () => {
       it('should not able to checkout, and redirect to signin page', done => {
         request(app)
           .get(homepage)
-          .expect(200, done)
           .end((err, res1) => {
+            expect(res1.status).to.equal(200);
             request(app)
               .get(`${addToCartUrl}1`)
-              .expect(302, done)
               .end((err, res2) => {
+                expect(res2.header.location).to.equal(homepage);
+                expect(res2.status).to.equal(302);
+
                 request(app)
                   .get(shoppingCartUrl)
-                  .expect(200, done)
                   .end((err, res3) => {
+                    expect(res3.status).to.equal(200);
+
                     request(app)
                       .get(checkoutUrl)
-                      .expect('Location', signinUrl)
-                      .expect(302, done)
                       .end((err, res4) => {
+                        expect(res4.header.location).to.equal(signinUrl);
+                        expect(res4.status).to.equal(302);
+
                         models.Cart.findAll().then(carts => {
                           expect(carts).to.be.an('array').that.is.empty;
                           done();
@@ -87,67 +91,66 @@ describe('Routes : Checkout', () => {
 
       it('should able to checkout, redirect to homepage', done => {
         setTimeout(done, 2000);
-        authenticatedUser
-          .get(signupUrl)
-          .expect(200, done)
-          .end((err, res1) => {
-            let $html = jQuery(res1.text);
-            let csrf = $html.find('input[name=_csrf]').val();
 
-            authenticatedUser
-              .post(signupUrl)
-              .set('cookie', res1.headers['set-cookie'])
-              .send({
-                _csrf: csrf,
-                ...userMe
-              })
-              .expect('Location', '/user/profile')
-              .end((err, res2) => {
-                authenticatedUser
-                  .get(`${addToCartUrl}1`)
-                  .set('cookie', res2.headers['set-cookie'])
-                  .send({
-                    _csrf: csrf
-                  })
-                  .expect(302, done)
-                  .end((err, res3) => {
-                    expect(res3.header.location).to.equal(homepage);
-                    authenticatedUser
-                      .get(shoppingCartUrl)
-                      .expect(200, done)
-                      .end((err, res4) => {
-                        authenticatedUser
-                          .get(checkoutUrl)
-                          .expect(200, done)
-                          .end((err, res5) => {
-                            authenticatedUser
-                              .post(checkoutUrl)
-                              .send({
-                                stripeToken: 'tok_visa'
-                              })
-                              .end((err, res6) => {
-                                models.User.findOne({
-                                  where: { id: 1 },
-                                  include: [
-                                    { model: models.Order },
-                                    { model: models.Cart }
-                                  ]
-                                }).then(user => {
-                                  expect(user.orders).to.be.an('array');
-                                  expect(user.orders).to.have.lengthOf(1);
-                                  expect(user.carts).to.be.an('array');
-                                  expect(user.carts).to.have.lengthOf(1);
-                                  expect(res6.statusCode).to.equal(302);
-                                  expect(res6.header.location).to.equal(
-                                    homepage
-                                  );
-                                }); // END }).then(user => {
-                              }); // END .end((err, res6) => {
-                          }); // END .end((err, res5) => {
-                      }); // END .end((err, res4) => {
-                  }); // END .end((err, res3) => {
-              }); // END .end((err, res2))
-          }); // END .end((err, res1) => {
+        authenticatedUser.get(signupUrl).end((err, res1) => {
+          expect(res1.status).to.equal(200);
+
+          let $html = jQuery(res1.text);
+          let csrf = $html.find('input[name=_csrf]').val();
+
+          authenticatedUser
+            .post(signupUrl)
+            .set('cookie', res1.headers['set-cookie'])
+            .send({
+              _csrf: csrf,
+              ...userMe
+            })
+            .end((err, res2) => {
+              expect(res2.header.location).to.equal(userProfile);
+              expect(res2.status).to.equal(302);
+
+              authenticatedUser
+                .get(`${addToCartUrl}1`)
+                .set('cookie', res2.headers['set-cookie'])
+                .send({
+                  _csrf: csrf
+                })
+                .end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+
+                  authenticatedUser.get(shoppingCartUrl).end((err, res4) => {
+                    expect(res4.status).to.equal(200);
+
+                    authenticatedUser.get(checkoutUrl).end((err, res5) => {
+                      expect(res5.status).to.equal(200);
+                      authenticatedUser
+                        .post(checkoutUrl)
+                        .send({
+                          stripeToken: 'tok_visa'
+                        })
+                        .end((err, res6) => {
+                          models.User.findOne({
+                            where: { id: 1 },
+                            include: [
+                              { model: models.Order },
+                              { model: models.Cart }
+                            ]
+                          }).then(user => {
+                            expect(user.orders).to.be.an('array');
+                            expect(user.orders).to.have.lengthOf(1);
+                            expect(user.carts).to.be.an('array');
+                            expect(user.carts).to.have.lengthOf(1);
+
+                            expect(res6.header.location).to.equal(homepage);
+                            expect(res6.statusCode).to.equal(302);
+                          }); // END }).then(user => {
+                        }); // END .end((err, res6) => {
+                    }); // END .end((err, res5) => {
+                  }); // END .end((err, res4) => {
+                }); // END .end((err, res3) => {
+            }); // END .end((err, res2))
+        }); // END .end((err, res1) => {
       }); // AND it('should able to checkout, redirect to homepage', done => {
     }); // END describe('GET /checkout', () => {
   }); // END describe('Member try to ', () => {

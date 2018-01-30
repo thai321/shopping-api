@@ -42,12 +42,7 @@ router.post(
     successRedirect: '/admin/profile',
     failureRedirect: '/admin/signup',
     failureFlash: true
-  }), // END passport.authenticate('local.signup'
-  (req, res, next) => {
-    // this funtion will run if sign in success
-
-    res.redirect('/admin/profile');
-  } // END (req, res, next)
+  }) // END passport.authenticate('local.signup'
 ); // END router.post(
 
 router.get('/signin', (req, res, next) => {

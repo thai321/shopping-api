@@ -22,7 +22,6 @@ var jQuery = require('jquery')(window);
 // Models and App
 const { app } = require('../../app');
 const models = require('../../models');
-const { Session } = models.sequelize.models;
 
 // for authentication request
 const authenticatedUser = request.agent(app);
@@ -40,8 +39,8 @@ const adminProfile = '/admin/profile';
 
 const shoppingCartUrl = '/shopping-cart';
 
-describe.only('Routes : Admin Permission ', () => {
-  describe("Admin can't go shopping ", () => {
+describe('Routes : Admin Permission ', () => {
+  describe("Admin can't go shopping or can't access to the admin routes", () => {
     // Reset the database and create a new product
     beforeEach(done => {
       setTimeout(done, 500);
@@ -68,25 +67,19 @@ describe.only('Routes : Admin Permission ', () => {
               expect(res2.header.location).to.equal(adminProfile);
               expect(res2.status).to.equal(302);
 
-              authenticatedUser
-                .get(adminProfile)
-                .expect(200, done)
-                .end((err, res3) => {
-                  expect(res3.status).to.equal(200);
-                  models.Admin.findOne({
-                    where: { email: signUpAdmin.email }
-                  }).then(user => {
-                    expect(user).to.have.property('name', signUpAdmin.name);
-                    expect(user).to.have.property('email', signUpAdmin.email);
-                    expect(user).to.have.property('phone', signUpAdmin.phone);
+              models.Admin.findOne({
+                where: { email: signUpAdmin.email }
+              }).then(user => {
+                expect(user).to.have.property('name', signUpAdmin.name);
+                expect(user).to.have.property('email', signUpAdmin.email);
+                expect(user).to.have.property('phone', signUpAdmin.phone);
 
-                    authenticatedUser.get(shoppingCartUrl).end((err, res4) => {
-                      expect(res4.header.location).to.equal(homepage);
-                      expect(res4.status).to.equal(302);
-                      done();
-                    }); // END authenticatedUser.get(shoppingCartUrl).end((err, res4) => {
-                  }); // END }).then(user => {
-                }); // END .end((err, res3) => {
+                authenticatedUser.get(shoppingCartUrl).end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+                  done();
+                }); // END authenticatedUser.get(shoppingCartUrl).end((err, res4) => {
+              }); // END }).then(user => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
@@ -109,26 +102,22 @@ describe.only('Routes : Admin Permission ', () => {
               ...signUpAdmin
             })
             .end((err, res2) => {
-              authenticatedUser
-                .get(adminProfile)
-                .expect(200, done)
-                .end((err, res2) => {
-                  models.Admin.findOne({
-                    where: { email: signUpAdmin.email }
-                  }).then(user => {
-                    expect(user).to.have.property('name', signUpAdmin.name);
-                    expect(user).to.have.property('email', signUpAdmin.email);
-                    expect(user).to.have.property('phone', signUpAdmin.phone);
+              expect(res2.header.location).to.equal(adminProfile);
+              expect(res2.status).to.equal(302);
 
-                    authenticatedUser
-                      .get(`${reduceItemUrl}1`)
-                      .end((err, res3) => {
-                        expect(res3.header.location).to.equal(homepage);
-                        expect(res3.status).to.equal(302);
-                        done();
-                      }); // END .end((err, res3) => {
-                  }); // END }).then(user => {
-                }); // END .end((err, res2) => {
+              models.Admin.findOne({
+                where: { email: signUpAdmin.email }
+              }).then(user => {
+                expect(user).to.have.property('name', signUpAdmin.name);
+                expect(user).to.have.property('email', signUpAdmin.email);
+                expect(user).to.have.property('phone', signUpAdmin.phone);
+
+                authenticatedUser.get(`${reduceItemUrl}1`).end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+                  done();
+                }); // END .end((err, res3) => {
+              }); // END }).then(user => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
@@ -151,26 +140,22 @@ describe.only('Routes : Admin Permission ', () => {
               ...signUpAdmin
             })
             .end((err, res2) => {
-              authenticatedUser
-                .get(adminProfile)
-                .expect(200, done)
-                .end((err, res2) => {
-                  models.Admin.findOne({
-                    where: { email: signUpAdmin.email }
-                  }).then(user => {
-                    expect(user).to.have.property('name', signUpAdmin.name);
-                    expect(user).to.have.property('email', signUpAdmin.email);
-                    expect(user).to.have.property('phone', signUpAdmin.phone);
+              expect(res2.header.location).to.equal(adminProfile);
+              expect(res2.status).to.equal(302);
 
-                    authenticatedUser
-                      .get(`${removeItemUrl}1`)
-                      .end((err, res3) => {
-                        expect(res3.header.location).to.equal(homepage);
-                        expect(res3.status).to.equal(302);
-                        done();
-                      }); // END .end((err, res3) => {
-                  }); // END }).then(user => {
-                }); // END .end((err, res2) => {
+              models.Admin.findOne({
+                where: { email: signUpAdmin.email }
+              }).then(user => {
+                expect(user).to.have.property('name', signUpAdmin.name);
+                expect(user).to.have.property('email', signUpAdmin.email);
+                expect(user).to.have.property('phone', signUpAdmin.phone);
+
+                authenticatedUser.get(`${removeItemUrl}1`).end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+                  done();
+                }); // END .end((err, res3) => {
+              }); // END }).then(user => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
@@ -205,24 +190,19 @@ describe.only('Routes : Admin Permission ', () => {
               expect(res2.header.location).to.equal(adminProfile);
               expect(res2.status).to.equal(302);
 
-              authenticatedUser
-                .get(adminProfile)
-                .expect(200, done)
-                .end((err, res3) => {
-                  models.Admin.findOne({
-                    where: { email: signUpAdmin.email }
-                  }).then(user => {
-                    expect(user).to.have.property('name', signUpAdmin.name);
-                    expect(user).to.have.property('email', signUpAdmin.email);
-                    expect(user).to.have.property('phone', signUpAdmin.phone);
+              models.Admin.findOne({
+                where: { email: signUpAdmin.email }
+              }).then(user => {
+                expect(user).to.have.property('name', signUpAdmin.name);
+                expect(user).to.have.property('email', signUpAdmin.email);
+                expect(user).to.have.property('phone', signUpAdmin.phone);
 
-                    authenticatedUser.get(usersigninUrl).end((err, res4) => {
-                      expect(res4.header.location).to.equal(homepage);
-                      expect(res4.status).to.equal(302);
-                      done();
-                    }); // END .end((err, res4) => {
-                  }); // END }).then(user => {
+                authenticatedUser.get(usersigninUrl).end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+                  done();
                 }); // END .end((err, res3) => {
+              }); // END }).then(user => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
@@ -248,21 +228,19 @@ describe.only('Routes : Admin Permission ', () => {
               expect(res2.header.location).to.equal(adminProfile);
               expect(res2.status).to.equal(302);
 
-              authenticatedUser.get(adminProfile).end((err, res3) => {
-                models.Admin.findOne({
-                  where: { email: signUpAdmin.email }
-                }).then(user => {
-                  expect(user).to.have.property('name', signUpAdmin.name);
-                  expect(user).to.have.property('email', signUpAdmin.email);
-                  expect(user).to.have.property('phone', signUpAdmin.phone);
+              models.Admin.findOne({
+                where: { email: signUpAdmin.email }
+              }).then(user => {
+                expect(user).to.have.property('name', signUpAdmin.name);
+                expect(user).to.have.property('email', signUpAdmin.email);
+                expect(user).to.have.property('phone', signUpAdmin.phone);
 
-                  authenticatedUser.get(usersignupUrl).end((err, res4) => {
-                    expect(res4.header.location).to.equal(homepage);
-                    expect(res4.status).to.equal(302);
-                    done();
-                  }); // END .end((err, res4) => {
-                }); // END }).then(user => {
-              }); // END .end((err, res3) => {
+                authenticatedUser.get(usersignupUrl).end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+                  done();
+                }); // END .end((err, res3) => {
+              }); // END }).then(user => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
@@ -288,21 +266,19 @@ describe.only('Routes : Admin Permission ', () => {
               expect(res2.header.location).to.equal(adminProfile);
               expect(res2.status).to.equal(302);
 
-              authenticatedUser.get(adminProfile).end((err, res3) => {
-                models.Admin.findOne({
-                  where: { email: signUpAdmin.email }
-                }).then(user => {
-                  expect(user).to.have.property('name', signUpAdmin.name);
-                  expect(user).to.have.property('email', signUpAdmin.email);
-                  expect(user).to.have.property('phone', signUpAdmin.phone);
+              models.Admin.findOne({
+                where: { email: signUpAdmin.email }
+              }).then(user => {
+                expect(user).to.have.property('name', signUpAdmin.name);
+                expect(user).to.have.property('email', signUpAdmin.email);
+                expect(user).to.have.property('phone', signUpAdmin.phone);
 
-                  authenticatedUser.get(userProfileUrl).end((err, res4) => {
-                    expect(res4.header.location).to.equal(homepage);
-                    expect(res4.status).to.equal(302);
-                    done();
-                  }); // END .end((err, res4) => {
-                }); // END }).then(user => {
-              }); // END .end((err, res3) => {
+                authenticatedUser.get(userProfileUrl).end((err, res3) => {
+                  expect(res3.header.location).to.equal(homepage);
+                  expect(res3.status).to.equal(302);
+                  done();
+                }); // END .end((err, res3) => {
+              }); // END }).then(user => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
