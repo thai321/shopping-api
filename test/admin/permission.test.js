@@ -43,7 +43,7 @@ describe('Routes : Admin Permission ', () => {
   describe("Admin can't go shopping or can't access to the User routes", () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 500);
+      setTimeout(done, 170);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
@@ -164,7 +164,7 @@ describe('Routes : Admin Permission ', () => {
 
   describe("Admin can't access to User routes", () => {
     beforeEach(done => {
-      setTimeout(done, 500);
+      setTimeout(done, 150);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
@@ -288,7 +288,7 @@ describe('Routes : Admin Permission ', () => {
   describe("Admin can't checkout", () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 500);
+      setTimeout(done, 150);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
@@ -320,7 +320,7 @@ describe('Routes : Admin Permission ', () => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
-    }); // END describe.only("GET /checkout", () => {
+    }); // END describe("GET /checkout", () => {
 
     describe('POST /checkout', () => {
       it('should redirect back to the admin profile', done => {
@@ -348,6 +348,6 @@ describe('Routes : Admin Permission ', () => {
             }); // END .end((err, res2) => {
         }); // END .end((err, res1) => {
       }); // END it('should redirect back to the home page', done => {
-    }); // END describe.only("GET /checkout", () => {
+    }); // END describe("GET /checkout", () => {
   }); // END describe("Admin can't checkout", () => {
 }); // END describe('Routes : Admin Permission ', () => {

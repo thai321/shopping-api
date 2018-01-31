@@ -30,14 +30,12 @@ const signinUrl = '/user/signin';
 const signupUrl = '/user/signup';
 const userProfile = '/user/profile';
 
-xdescribe('Routes : Checkout', () => {
+describe('Routes : Checkout', () => {
   describe('Anonymous or no login try to ', function() {
     describe('GET /checkout', function() {
-      this.timeout(3000);
-
       // Reset the database and create a new product
       beforeEach(done => {
-        setTimeout(done, 1000);
+        setTimeout(done, 150);
         models.sequelize.sync({ force: true, logging: false }).then(() => {
           return models.Product.create(productData1);
         });
@@ -73,24 +71,22 @@ xdescribe('Routes : Checkout', () => {
                   }); // END .end((err, res3) => {
               }); // END .end((err, res2) => {
           }); // END .end( (err, res1) => {
-      }); // END       it.only('should not able to checkout, and redirect to signin page', done => {
+      }); // END it('should not able to checkout, and redirect to signin page', done => {
     }); // END describe('GET /add-to-cart/:id', () => {
   }); // END describe('Anonymous or no login', () => {
 
   describe('Member try to ', function() {
     describe('GET /checkout', function() {
-      this.timeout(3000);
-
       // Reset the database and create a new product
       beforeEach(done => {
-        setTimeout(done, 1000);
+        setTimeout(done, 160);
         models.sequelize.sync({ force: true, logging: false }).then(() => {
           return models.Product.create(productData1);
         });
       });
 
       it('should able to checkout, redirect to homepage', done => {
-        setTimeout(done, 2000);
+        setTimeout(done, 1400);
 
         authenticatedUser.get(signupUrl).end((err, res1) => {
           expect(res1.status).to.equal(200);

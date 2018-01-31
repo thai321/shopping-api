@@ -45,7 +45,7 @@ const adminProfile = '/admin/profile';
 describe('Routes : User Permission ', () => {
   describe("User Can't get access to the admin routes", () => {
     beforeEach(done => {
-      setTimeout(done, 500);
+      setTimeout(done, 165);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });

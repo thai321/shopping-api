@@ -50,7 +50,7 @@ describe('Routes : User authentication', () => {
   describe('POST /user/signup', () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 500);
+      setTimeout(done, 120);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
@@ -203,7 +203,7 @@ describe('Routes : User authentication', () => {
   describe('POST /user/signin', () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 500);
+      setTimeout(done, 120);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
