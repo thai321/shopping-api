@@ -16,16 +16,16 @@ module.exports = {
     return queryInterface.bulkInsert(
       'users',
       [
-        {
-          name: 'thai',
-          email: 'thai@gmail.com',
-          password: 'password',
-          phone: '4086085237',
-          mailingAddress: 'Sunnyvale',
-          shippingAdress: 'Sunnyvale',
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
+        // {
+        //   name: 'thai',
+        //   email: 'thai@gmail.com',
+        //   password: 'password',
+        //   phone: '4086085237',
+        //   mailingAddress: 'Sunnyvale',
+        //   shippingAdress: 'Sunnyvale',
+        //   createdAt: new Date(),
+        //   updatedAt: new Date()
+        // }
       ],
       {}
     );

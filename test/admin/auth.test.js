@@ -50,7 +50,7 @@ describe('Routes : Admin authentication', () => {
   describe('POST /admin/signup', () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 140);
+      setTimeout(done, 150);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });

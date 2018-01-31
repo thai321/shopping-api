@@ -46,6 +46,16 @@ router.get('/remove/:id', notAdmin, (req, res, next) => {
   res.redirect('/shopping-cart');
 });
 
+router.get('/add/:id', notAdmin, (req, res, next) => {
+  const productId = req.params.id;
+  const cart = models.Cart.build(req.session.cart);
+  const { price } = cart.products[productId];
+
+  cart.increaseByOne(price, productId);
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+}); // END router.get('/add/:id', notAdmin, (req, res, next) => {
+
 // Render the overview of the shopping list (cart view)
 router.get('/shopping-cart', notAdmin, (req, res, next) => {
   if (!req.session.cart) {

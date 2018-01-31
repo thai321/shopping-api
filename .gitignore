@@ -3,3 +3,4 @@ node_modules/
 .byebug_history
 keys_dev.js
 yarn.lock
+.env

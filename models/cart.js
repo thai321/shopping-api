@@ -54,6 +54,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
+  Cart.prototype.increaseByOne = function(productPrice, id) {
+    this.items[id].qty++;
+    this.items[id].price += productPrice;
+    this.totalQuantity++;
+    this.totalPrice += productPrice;
+  };
+
   Cart.prototype.remove = function(id) {
     this.totalQuantity -= this.items[id].qty;
     this.totalPrice -= this.items[id].price;

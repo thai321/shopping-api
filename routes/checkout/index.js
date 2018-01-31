@@ -94,15 +94,13 @@ router.post('/checkout', requireSignin, (req, res, next) => {
                 ],
                 (err, result) => {
                   res.redirect('/');
-                  return;
                 } // END (err, result) => {
               ); // END async.series(
             }) // END .then(cart => {
             .catch(error => {
               throw error;
-            });
-          // END models.Order.create(orderData)
-        })
+            }); // END .catch(error => {
+        }) // END models.Order.create(orderData)
         .catch(error => {
           throw error;
         });
