@@ -20,7 +20,7 @@ allRoutes(app);
 app.use(express.static(path.join(__dirname, '/public')));
 
 const env = process.env.NODE_ENV;
-if (env === 'sync') {
+if (env === 'sync' || env === 'travis') {
   require('./helpers/sync_db')();
 } else if (env === 'test') {
   require('./helpers/listen')(app);

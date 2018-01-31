@@ -52,7 +52,7 @@ describe('Routes : User Permission ', () => {
     });
 
     describe('GET /admin/signup', () => {
-      it('should redirect back to user profile', done => {
+      it('should redirect back to User profile', done => {
         authenticatedUser.get(signupUrl).end((err, res1) => {
           const $html = jQuery(res1.text);
           const csrf = $html.find('input[name=_csrf]').val();

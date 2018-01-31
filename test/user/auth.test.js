@@ -37,7 +37,7 @@ const signinUrl = '/user/signin';
 const logoutUrl = '/user/logout';
 const userProfile = '/user/profile';
 
-describe('Routes : user authentication', () => {
+describe('Routes : User authentication', () => {
   describe('GET /user/signup', () => {
     // Should render '/user/signup' Sign Up with status code 200
     it('should render the signup page', done => {

@@ -40,7 +40,7 @@ const adminProfile = '/admin/profile';
 const shoppingCartUrl = '/shopping-cart';
 
 describe('Routes : Admin Permission ', () => {
-  describe("Admin can't go shopping or can't access to the admin routes", () => {
+  describe("Admin can't go shopping or can't access to the User routes", () => {
     // Reset the database and create a new product
     beforeEach(done => {
       setTimeout(done, 500);

@@ -30,7 +30,7 @@ const signinUrl = '/user/signin';
 const signupUrl = '/user/signup';
 const userProfile = '/user/profile';
 
-describe('Routes : Checkout', () => {
+xdescribe('Routes : Checkout', () => {
   describe('Anonymous or no login try to ', function() {
     describe('GET /checkout', function() {
       this.timeout(3000);

@@ -8,7 +8,9 @@
     "t": "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit",
     "test":
       "cross-env NODE_ENV=test mocha \"test/**/*.test.js\" -R spec --exit",
-    "sync": "cross-env NODE_ENV=sync node app.js"
+    "sync": "cross-env NODE_ENV=sync node app.js",
+    "travis":
+      "cross-env NODE_ENV=travis mocha \"test/**/*.test.js\" -R spec --exit"
   },
   "engines": {
     "node": "8.9.4",
@@ -44,13 +46,12 @@
     "twilio": "3.11.1"
   },
   "devDependencies": {
-    "chai": "4.1.2",
-    "expect": "22.1.0",
-    "jsdom": "11.6.1",
-    "mocha": "5.0.0",
     "morgan": "1.9.0",
-    "pryjs": "1.0.3",
+    "volleyball": "1.4.1",
+    "mocha": "5.0.0",
+    "chai": "4.1.2",
     "supertest": "3.0.0",
-    "volleyball": "1.4.1"
+    "jsdom": "11.6.1",
+    "pryjs": "1.0.3"
   }
 }
