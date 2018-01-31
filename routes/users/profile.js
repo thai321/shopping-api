@@ -7,8 +7,6 @@ module.exports = router => {
   const { getProducts } = require('./helper');
 
   router.get('/profile', isLoggedIn, (req, res, next) => {
-    const { id } = req.user;
-
     req.user
       .getOrders({
         attributes: [
@@ -24,14 +22,14 @@ module.exports = router => {
       })
       .then(orders => {
         if (orders.length <= 0) {
-          res.render('user/profile', { empty: true });
+          res.render('user/profile', { userName: req.user.name });
         } else {
           async.each(
             orders,
             getProducts, // service function
             err => {
               if (err) throw err;
-              res.render('user/profile', { orders });
+              res.render('user/profile', { orders, userName: req.user.name });
             } // END err => {
           ); // END async.each(
         } // END else {
