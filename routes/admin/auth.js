@@ -4,6 +4,7 @@ module.exports = router => {
   const { isLoggedIn, notLoggedIn } = require('./service');
 
   router.get('/logout', isLoggedIn, (req, res, next) => {
+    req.session.cart = null;
     req.logout();
     res.redirect('/');
   });

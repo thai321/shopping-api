@@ -1,5 +1,5 @@
 const passport = require('passport');
-const models = require('../models');
+const models = require('../../models');
 const LocalStrategy = require('passport-local').Strategy;
 const Joi = require('joi');
 
@@ -127,18 +127,16 @@ passport.use(
           if (!user) {
             return done(null, false, { message: 'Invalid email' });
           }
-
           // Handle: Invalid password
           if (!user.authenticate(password)) {
             return done(null, false, { message: 'Wrong password' });
           }
-
           // user found
           return done(null, user);
         })
         .catch(error => done(error));
     } // END (req, email, password, done)
-  )
+  ) // END new LocalStrategy(
 ); // END passport Signin
 
 const signInSchema = Joi.object().keys({

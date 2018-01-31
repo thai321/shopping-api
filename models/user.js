@@ -60,24 +60,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  // User.prototype.createToken = function() {
-  //   return jwt.sign({ id: this.id }, constants.JWT_SECRET)
-  // };
-  //
-  // User.prototype.toJSON = function() {
-  //   return {
-  //     id: this.id,
-  //     username: this.username,
-  //     email: this.email
-  //   };
-  // };
-  //
-  // User.prototype.toAuthJSON = function() {
-  //   return {
-  //     token: this.createToken(),
-  //     ...this.toJSON()
-  //   };
-  // };
-
   return User;
 };

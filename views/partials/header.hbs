@@ -16,19 +16,19 @@
             <ul class="nav navbar-nav navbar-right">
                 {{#if isAdminLoggedIn }}
                     <li>
-                        <a href="/admin/users"><i class="fa fa-users" aria-hidden="true"></i>User List
+                        <a href="/admin/users"><i class="fa fa-users" aria-hidden="true"></i> User List
                             <span class="badge"></span>
                         </a>
                     </li>
                     <li>
-                        <a href="/admin/users"><i class="fa fa-users" aria-hidden="true"></i>Order List
+                        <a href="/admin/users"><i class="fa fa-users" aria-hidden="true"></i> Order List
                             <span class="badge"></span>
                         </a>
                     </li>
 
                 {{ else }}
                     <li>
-                        <a href="/shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Shopping Cart
+                        <a href="/shopping-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
                             <span class="badge">{{ session.cart.totalQuantity }}</span>
                         </a>
                     </li>

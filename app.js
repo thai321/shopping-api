@@ -28,4 +28,4 @@ if (env === 'sync') {
   require('./helpers/listen_and_sync_db')(app);
 }
 
-module.exports = { app };
+module.exports = app;

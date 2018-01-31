@@ -20,7 +20,7 @@ const { window } = new JSDOM(`...`);
 var jQuery = require('jquery')(window);
 
 // Models and App
-const { app } = require('../../app');
+const app = require('../../app');
 const models = require('../../models');
 
 // for authentication request

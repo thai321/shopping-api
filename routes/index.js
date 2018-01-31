@@ -11,4 +11,6 @@ module.exports = app => {
   app.use('/', homeRoutes);
   app.use('/', cartRoutes);
   app.use('/', checkoutRoutes);
+
+  require('./default')(app); // default route
 };

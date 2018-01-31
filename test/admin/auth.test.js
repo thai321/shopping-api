@@ -20,7 +20,7 @@ const { window } = new JSDOM(`...`);
 var jQuery = require('jquery')(window);
 
 // Models and App
-const { app } = require('../../app');
+const app = require('../../app');
 const models = require('../../models');
 
 // for authentication request
@@ -50,7 +50,7 @@ describe('Routes : Admin authentication', () => {
   describe('POST /admin/signup', () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 130);
+      setTimeout(done, 140);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
@@ -198,7 +198,7 @@ describe('Routes : Admin authentication', () => {
   describe('POST /admin/signin', () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 130);
+      setTimeout(done, 140);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });
