@@ -1,6 +1,7 @@
 module.exports = router => {
   const async = require('async');
 
+  const { getProducts } = require('./helper');
   const { isLoggedIn } = require('./service');
   const models = require('../../models');
 
