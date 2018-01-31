@@ -5,9 +5,10 @@ let STRIPE_PUBLIC_KEY,
   TWILIO_AUTH_TOKEN,
   SENDGRID_API_KEY;
 
-const dotenv = require('dotenv').config();
-
-if (dotenv.error) throw dotenv.error;
+if (process.env.NODE_ENV !== 'production') {
+  const dotenv = require('dotenv').config();
+  if (dotenv.error) throw dotenv.error;
+}
 
 module.exports = {
   STRIPE_PUBLIC_KEY: process.env.STRIPE_PUBLIC_KEY,
