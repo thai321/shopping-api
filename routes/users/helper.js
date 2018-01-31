@@ -2,9 +2,11 @@ module.exports = {
   // merging product and items
   // Ex: product = { id: 1, title: ..., price: },
   // items = { '1', totalPrice: ..., totalQuantity: ... }
-  generateArray,
   getProducts
 };
+
+const models = require('../../models');
+const moment = require('moment');
 
 function generateArray(products, items) {
   const arr = [];
