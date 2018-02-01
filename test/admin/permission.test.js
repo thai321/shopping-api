@@ -43,7 +43,7 @@ describe('Routes : Admin Permission ', () => {
   describe("Admin can't go shopping or can't access to the User routes", () => {
     // Reset the database and create a new product
     beforeEach(done => {
-      setTimeout(done, 170);
+      setTimeout(done, 500);
       models.sequelize.sync({ force: true, logging: false }).then(() => {
         return models.Product.create(productData1);
       });

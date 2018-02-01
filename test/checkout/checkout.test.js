@@ -76,7 +76,7 @@ describe('Routes : Checkout', () => {
   }); // END describe('Anonymous or no login', () => {
 
   describe('Member try to ', function() {
-    describe('GET /checkout', function() {
+    describe('POST /checkout', function() {
       // Reset the database and create a new product
       beforeEach(done => {
         setTimeout(done, 160);

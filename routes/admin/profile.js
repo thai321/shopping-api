@@ -49,4 +49,28 @@ module.exports = router => {
         }); // END .then(orders => {
     }); // END models.User.findById(userId).then(user => {
   }); // END router.get('/users/:id', isLoggedIn, (req, res, next) => {
+
+  router.get('/orders', isLoggedIn, (req, res, next) => {
+    models.Order.findAll({
+      attributes: ['createdAt', 'paymentMethod', 'status'],
+      include: [
+        {
+          model: models.Cart,
+          attributes: ['totalPrice', 'totalQuantity', 'items', 'createdAt']
+        },
+        { model: models.User, attributes: ['name'] }
+      ],
+      order: [['updatedAt', 'DESC']]
+    }).then(orders => {
+      if (orders.length <= 0) {
+        res.render('order/order-list', { orders });
+      } else {
+        async.each(orders, getProducts, err => {
+          if (err) throw err;
+          console.log(orders[0]);
+          res.render('order/order-list', { orders });
+        });
+      }
+    });
+  }); // END router.get('/users', isLoggedIn, (req, res, next) => {
 }; // END module.exports = router => {

@@ -37,21 +37,42 @@ async = require('async');
 //     console.log(message);
 //   });
 
-async.series(
-  [
-    function one({ callback }) {
-      console.log('Call back = ', callback);
-      callback(null, 'one');
-    },
-    function one(callback) {
-      callback(null, 'two');
-    },
-    function one(callback) {
-      callback(null, 'three');
-    }
-  ],
-  function(err, result) {
-    console.log(result);
-    console.log(1);
-  }
-);
+// async.series(
+//   [
+//     function one({ callback }) {
+//       console.log('Call back = ', callback);
+//       callback(null, 'one');
+//     },
+//     function one(callback) {
+//       callback(null, 'two');
+//     },
+//     function one(callback) {
+//       callback(null, 'three');
+//     }
+//   ],
+//   function(err, result) {
+//     console.log(result);
+//     console.log(1);
+//   }
+// );
+
+// include: [
+//   {
+//     model: models.Cart,
+//     attributes: ['totalPrice', 'totalQuantity', 'items', 'createdAt']
+//   }
+// ]
+
+const models = require('./models');
+
+models.Order.findAll({
+  attributes: {
+    include: [
+      [models.sequelize.fn('COUNT', models.sequelize.col('userId')), 'no_name']
+    ]
+  },
+  group: ['id']
+}).then(orders => {
+  console.log(orders);
+  return;
+});
