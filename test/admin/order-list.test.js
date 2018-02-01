@@ -74,7 +74,7 @@ describe('Routes : Admin', function() {
                         models.Product.findAll().then(products => {
                           expect(products).to.be.an('array');
                           expect(products.length).to.equal(2);
-                        });
+                        }); // END models.Product.findAll().then(products => {
                       }); // END models.Cart.findAll().then(carts => {
                     }); // END .end((err, res4) => {
                 }); // END .end((err, res3) => {

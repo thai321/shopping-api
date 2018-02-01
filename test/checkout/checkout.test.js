@@ -72,7 +72,7 @@ describe('Routes : Checkout', () => {
               }); // END .end((err, res2) => {
           }); // END .end( (err, res1) => {
       }); // END it('should not able to checkout, and redirect to signin page', done => {
-    }); // END describe('GET /add-to-cart/:id', () => {
+    }); // END describe('GET /checkout', function() {
   }); // END describe('Anonymous or no login', () => {
 
   describe('Member try to ', function() {
