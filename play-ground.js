@@ -1,4 +1,10 @@
-async = require('async');
+// import { log } from "../../Library/Caches/typescript/2.6/node_modules/@types/async";
+// import { fail } from "assert";
+// import { loadavg } from "os";
+// import { prototype } from "events";
+// import { EPROTOTYPE } from "constants";
+
+// const async = require("async");
 //
 // // 1st para in async.each() is the array of items
 // async.each(
@@ -63,16 +69,16 @@ async = require('async');
 //   }
 // ]
 
-const models = require('./models');
+// const models = require('./models');
 
-models.Order.findAll({
-  attributes: {
-    include: [
-      [models.sequelize.fn('COUNT', models.sequelize.col('userId')), 'no_name']
-    ]
-  },
-  group: ['id']
-}).then(orders => {
-  console.log(orders);
-  return;
-});
+// models.Order.findAll({
+//   attributes: {
+//     include: [
+//       [models.sequelize.fn('COUNT', models.sequelize.col('userId')), 'no_name']
+//     ]
+//   },
+//   group: ['id']
+// }).then(orders => {
+//   console.log(orders);
+//   return;
+// });

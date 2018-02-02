@@ -1,8 +1,8 @@
-const express = require('express');
-const path = require('path');
+const express = require("express");
+const path = require("path");
 
-const middlewares = require('./middlewares');
-const allRoutes = require('./routes');
+const middlewares = require("./middlewares");
+const allRoutes = require("./routes");
 
 const app = express();
 
@@ -17,15 +17,15 @@ allRoutes(app);
 // can be found and sent back
 // for example - GET request to
 // localhost:3000/large.jpg will send back a puppy image
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, "/public")));
 
 const env = process.env.NODE_ENV;
-if (env === 'sync') {
-  require('./helpers/sync_db')();
-} else if (env === 'test') {
-  require('./helpers/listen')(app);
+if (env === "sync") {
+  require("./helpers/sync_db")();
+} else if (env === "test") {
+  require("./helpers/listen")(app);
 } else {
-  require('./helpers/listen_and_sync_db')(app);
+  require("./helpers/listen_and_sync_db")(app);
 }
 
 module.exports = app;

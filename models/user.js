@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
-const bCrypt = require('bcrypt');
+const bCrypt = require("bcrypt");
 
-const jwt = require('jsonwebtoken');
-const constants = require('../config/constants');
+const jwt = require("jsonwebtoken");
+const constants = require("../config/constants");
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    'user',
+    "user",
     {
       name: {
         type: DataTypes.STRING,
@@ -44,11 +44,11 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = models => {
     User.hasMany(models.Order, {
-      foreignKey: 'userId'
+      foreignKey: "userId"
     });
 
     User.hasMany(models.Cart, {
-      foreignKey: 'userId'
+      foreignKey: "userId"
     });
   };
 

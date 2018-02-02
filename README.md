@@ -58,7 +58,7 @@
 ### Time Zone
 
 ```js
-const moment = require('moment-timezone');
+const moment = require("moment-timezone");
 moment.tz.names();
 ```
 

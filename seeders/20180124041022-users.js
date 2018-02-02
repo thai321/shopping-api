@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -12,23 +12,22 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-
-    return queryInterface.bulkInsert(
-      'users',
-      [
-        // {
-        //   name: 'thai',
-        //   email: 'thai@gmail.com',
-        //   password: 'password',
-        //   phone: '4086085237',
-        //   mailingAddress: 'Sunnyvale',
-        //   shippingAdress: 'Sunnyvale',
-        //   createdAt: new Date(),
-        //   updatedAt: new Date()
-        // }
-      ],
-      {}
-    );
+    // return queryInterface.bulkInsert(
+    // 'users',
+    // [
+    // {
+    //   name: 'thai',
+    //   email: 'thai@gmail.com',
+    //   password: 'password',
+    //   phone: '4086085237',
+    //   mailingAddress: 'Sunnyvale',
+    //   shippingAdress: 'Sunnyvale',
+    //   createdAt: new Date(),
+    //   updatedAt: new Date()
+    // }
+    // ],
+    // {}
+    // );
   },
 
   down: (queryInterface, Sequelize) => {

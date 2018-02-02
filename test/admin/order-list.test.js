@@ -1,38 +1,38 @@
 // Setup for testing
-const chai = require('chai');
-const request = require('supertest');
+const chai = require("chai");
+const request = require("supertest");
 const expect = chai.expect;
 chai.config.includeStack = true;
 
 // JQuery
-const jsdom = require('jsdom');
+const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const { window } = new JSDOM(`...`);
-const jQuery = require('jquery')(window);
+const jQuery = require("jquery")(window);
 
 // Models and App
-const app = require('../../app');
-const models = require('../../models');
+const app = require("../../app");
+const models = require("../../models");
 
 // for authentication request
 const authenticatedUser = request.agent(app);
 
 // Fixtures
-const { productData1, productData2 } = require('../../fixtures/products');
-const { userMe, signUpUser, signinUser } = require('../../fixtures/users');
+const { productData1, productData2 } = require("../../fixtures/products");
+const { userMe, signUpUser, signinUser } = require("../../fixtures/users");
 
 // Urls
-const homepage = '/';
-const addToCartUrl = '/add-to-cart/';
-const shoppingCartUrl = '/shopping-cart';
-const checkoutUrl = '/checkout';
-const signinUrl = '/user/signin';
-const signupUrl = '/user/signup';
-const logout = '/user/logout';
-const userProfile = '/user/profile';
+const homepage = "/";
+const addToCartUrl = "/add-to-cart/";
+const shoppingCartUrl = "/shopping-cart";
+const checkoutUrl = "/checkout";
+const signinUrl = "/user/signin";
+const signupUrl = "/user/signup";
+const logout = "/user/logout";
+const userProfile = "/user/profile";
 
-describe('Routes : Admin', function() {
-  describe('Intialize 2 products', function() {
+describe("Routes : Admin", function() {
+  describe("Intialize 2 products", function() {
     this.timeout(3000);
 
     // Reset the database and create a new product
@@ -45,7 +45,7 @@ describe('Routes : Admin', function() {
       });
     });
 
-    it('Intialize 2 products', function(done) {
+    it("Intialize 2 products", function(done) {
       setTimeout(done, 1000);
 
       request(app)
@@ -70,9 +70,9 @@ describe('Routes : Admin', function() {
                       expect(res4.status).to.equal(302);
 
                       models.Cart.findAll().then(carts => {
-                        expect(carts).to.be.an('array').that.is.empty;
+                        expect(carts).to.be.an("array").that.is.empty;
                         models.Product.findAll().then(products => {
-                          expect(products).to.be.an('array');
+                          expect(products).to.be.an("array");
                           expect(products.length).to.equal(2);
                         }); // END models.Product.findAll().then(products => {
                       }); // END models.Cart.findAll().then(carts => {
@@ -83,7 +83,7 @@ describe('Routes : Admin', function() {
     }); // END it('should not able to checkout, and redirect to signin page', done => {
   }); // END describe('Anonymous or no login', () => {
 
-  describe('POST /checkout', function(done) {
+  describe("POST /checkout", function(done) {
     this.timeout(3000);
 
     // Reset the database and create a new product
@@ -96,18 +96,18 @@ describe('Routes : Admin', function() {
       });
     });
 
-    it('should create 2 orders and checkout from two different users, redirect to homepage', function(done) {
+    it("should create 2 orders and checkout from two different users, redirect to homepage", function(done) {
       setTimeout(done, 2100);
 
       authenticatedUser.get(signupUrl).end((err, res1) => {
         expect(res1.status).to.equal(200);
 
         let $html = jQuery(res1.text);
-        let csrf = $html.find('input[name=_csrf]').val();
+        let csrf = $html.find("input[name=_csrf]").val();
 
         authenticatedUser
           .post(signupUrl)
-          .set('cookie', res1.headers['set-cookie'])
+          .set("cookie", res1.headers["set-cookie"])
           .send({
             _csrf: csrf,
             ...signUpUser
@@ -118,7 +118,7 @@ describe('Routes : Admin', function() {
 
             authenticatedUser
               .get(`${addToCartUrl}1`)
-              .set('cookie', res2.headers['set-cookie'])
+              .set("cookie", res2.headers["set-cookie"])
               .send({
                 _csrf: csrf
               })
@@ -134,7 +134,7 @@ describe('Routes : Admin', function() {
                     authenticatedUser
                       .post(checkoutUrl)
                       .send({
-                        stripeToken: 'tok_visa'
+                        stripeToken: "tok_visa"
                       })
                       .end((err, res6) => {
                         models.User.findOne({
@@ -144,9 +144,9 @@ describe('Routes : Admin', function() {
                             { model: models.Cart }
                           ]
                         }).then(user => {
-                          expect(user.orders).to.be.an('array');
+                          expect(user.orders).to.be.an("array");
                           expect(user.orders).to.have.lengthOf(1);
-                          expect(user.carts).to.be.an('array');
+                          expect(user.carts).to.be.an("array");
                           expect(user.carts).to.have.lengthOf(1);
 
                           expect(res6.header.location).to.equal(homepage);
@@ -162,11 +162,11 @@ describe('Routes : Admin', function() {
                                 expect(res8.status).to.equal(200);
 
                                 $html = jQuery(res8.text);
-                                csrf = $html.find('input[name=_csrf]').val();
+                                csrf = $html.find("input[name=_csrf]").val();
 
                                 authenticatedUser
                                   .post(signupUrl)
-                                  .set('cookie', res1.headers['set-cookie'])
+                                  .set("cookie", res1.headers["set-cookie"])
                                   .send({
                                     _csrf: csrf,
                                     ...userMe
@@ -179,7 +179,7 @@ describe('Routes : Admin', function() {
 
                                     authenticatedUser
                                       .get(`${addToCartUrl}2`)
-                                      .set('cookie', res2.headers['set-cookie'])
+                                      .set("cookie", res2.headers["set-cookie"])
                                       .send({
                                         _csrf: csrf
                                       })
@@ -206,7 +206,7 @@ describe('Routes : Admin', function() {
                                                 authenticatedUser
                                                   .post(checkoutUrl)
                                                   .send({
-                                                    stripeToken: 'tok_visa'
+                                                    stripeToken: "tok_visa"
                                                   })
                                                   .end((err, res13) => {
                                                     expect(
@@ -230,7 +230,7 @@ describe('Routes : Admin', function() {
                                                           orders => {
                                                             expect(
                                                               orders
-                                                            ).to.be.an('array');
+                                                            ).to.be.an("array");
                                                             expect(
                                                               orders.length
                                                             ).to.equal(2);
