@@ -1,0 +1,40 @@
+{
+  "eslint.enable": true,
+  "window.zoomLevel": 0,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "editor.renderLineHighlight": "all",
+  "atomKeymap.promptV3Features": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.formatOnPaste": true,
+  "editor.minimap.showSlider": "always",
+  // Overrides colors from the currently selected color theme.
+  "workbench.colorCustomizations": {
+    "editor.lineHighlightBorder": "#2e2d2d",
+    "editor.lineHighlightBackground": "#202020",
+    "editorLineNumber.foreground": "#999999",
+    "editorGutter.background": "#181616"
+  },
+  "workbench.startupEditor": "none",
+  "eslint.trace.server": "messages",
+  "eslint.alwaysShowStatus": true,
+  "workbench.iconTheme": "vscode-icons",
+  // Always include all words from the current document.
+  "javascript.suggest.alwaysAllWords": true,
+  // Complete functions with their parameter signature.
+  "javascript.suggest.useCodeSnippetsOnMethodSuggest": true,
+  "[markdown]": {},
+  "files.associations": {
+    "*.md": "markdown"
+  },
+  "git.enableSmartCommit": true,
+  "jshint.options": {
+    "esversion": 6,
+    "node": true
+  },
+  "workbench.colorTheme": "Dark-Dracula",
+  "editor.occurrencesHighlight": false,
+  "editor.selectionHighlight": false,
+  "highlightSelections.borderWidth": "0.5px"
+}
